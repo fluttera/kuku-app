@@ -1,6 +1,6 @@
 import 'AbstractBaseDto.dart';
 
-class SearchKeywordsItem extends BaseDto{
+class SearchKeywordsDto extends BaseDto{
 
   int _type; // 搜索类型 1=游戏 2=礼包 3=资讯
   set seType(int type) => _type = type;
@@ -18,12 +18,12 @@ class SearchKeywordsItem extends BaseDto{
   set setIcon(String icon) => _icon = icon;
   String get getIcon => _icon;
 
-  SearchKeywordsItem(this._type, this._show, this._keywords, this._icon);
-  SearchKeywordsItem.ofNull();
+  SearchKeywordsDto(this._type, this._show, this._keywords, this._icon);
+  SearchKeywordsDto.ofNull();
 
   @override
   BaseDto fromJson(Map<String, dynamic> json) {
-    return  SearchKeywordsItem(json['type'], json['show'], json['keywords'], json['icon']);
+    return  SearchKeywordsDto(json['type'], json['show'], json['keywords'], json['icon']);
   }
 
   @override
@@ -37,10 +37,10 @@ class SearchKeywordsItem extends BaseDto{
 
   @override
   bool operator == (other) {
-    if(other is! SearchKeywordsItem){
+    if(other is! SearchKeywordsDto){
       return false;
     }
-    final SearchKeywordsItem item = other;
+    final SearchKeywordsDto item = other;
     return _show == item._show;
   }
 

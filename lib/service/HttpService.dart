@@ -23,9 +23,11 @@ class HttpService {
   }
 
   /// 调用搜索词自动补全服务
-  Future<Map<String, dynamic>> callSearchAutoKeywordsAPI() async{
+  Future<Map<String, dynamic>> callSearchAutoKeywordsAPI(String query) async{
     HttpClient httpClient = HttpClient();
-    Map<String, dynamic> response = await httpClient.postFuture(API.seach_auto_keywords_api);
+    Map<String, String> params = Map();
+    params['query'] = query;
+    Map<String, dynamic> response = await httpClient.postFuture(API.seach_auto_keywords_api, queryParameters: params);
     return response;
   }
 

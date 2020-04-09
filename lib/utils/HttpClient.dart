@@ -71,7 +71,7 @@ class HttpClient {
       }) async {
     Map<String, dynamic> result;
 
-    Response response  = await dio.post(path, data: data,
+    Response<String> response  = await dio.post(path, data: data,
         queryParameters: queryParameters,
         options: options,
         onSendProgress: onSendProgress,
@@ -80,8 +80,8 @@ class HttpClient {
 
     print('http post future $path, status code=${response.statusCode} , response: $response');
 
-    if( response.statusCode == 200 ){
-      result = json.decode(response.data.toString());
+    if( response.statusCode == 200 && response.data !=null && response.data.isNotEmpty ){
+      result = json.decode(response.data);
       return result;
     }else{
       return null;
@@ -97,7 +97,7 @@ class HttpClient {
         ProgressCallback onReceiveProgress,
       }) async {
     Map<String, dynamic> result;
-    Response response = await dio.get(path,
+    Response<String> response = await dio.get(path,
       queryParameters: queryParameters ,
       options: options,
       cancelToken: cancelToken,
@@ -106,8 +106,8 @@ class HttpClient {
 
     print('http get future $path, status code=${response.statusCode} , response: $response');
 
-    if( response.statusCode == 200 ){
-      result = json.decode(response.data.toString());
+    if( response.statusCode == 200 && response.data != null && response.data.isNotEmpty){
+      result = json.decode(response.data);
       return result;
     }else{
       return null;
@@ -131,7 +131,7 @@ class HttpClient {
       onReceiveProgress: onReceiveProgress,
     ).then((response){
       print('http get $path, status code=${response.statusCode} , response: $response');
-      if( response.statusCode == 200 ){
+      if( response.statusCode == 200 && response.data != null && response.data.isNotEmpty){
         result = json.decode(response.data.toString());
         responseCallBack(200, result);
       }else{

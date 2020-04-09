@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:kuku_app_flutter/service/SearchService.dart';
 
-import 'package:kuku_app_flutter/dto/SearchKeywordsItem.dart';
+import 'package:kuku_app_flutter/dto/SearchKeywordsDto.dart';
 
 class SearchKeywordsModel with ChangeNotifier {
 
   static const SearchService searchService = SearchService();
 
-  List<SearchKeywordsItem> list = List();
+  List<SearchKeywordsDto> list = List();
 
   int selected;
 

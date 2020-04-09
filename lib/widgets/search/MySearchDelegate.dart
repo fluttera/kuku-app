@@ -74,6 +74,12 @@ class MySearchDelegate extends SearchDelegate<String>{
       this.popResults(context);
       this.setSearchKeyword(event.keywords);
     });
+
+    // 发送Auto事件
+    if(query.isNotEmpty){
+      print('==2=>$query');
+      eventBus.fire(SearchQueryChangedEvent(query));
+    }
     /// 将方法作为参数传递给子组件调用
     return query.isEmpty ? Suggestions() : AutoComplete(query, this.popResults, this.setSearchKeyword);
   }

@@ -11,3 +11,14 @@ const searchRecommendTitle = TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.black,
 );
+
+const autoListTitle = TextStyle(
+  fontSize: 18,
+  color: Colors.black45
+);
+
+const autoListTitleBold = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: Colors.black
+);

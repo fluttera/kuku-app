@@ -1,52 +1,26 @@
 
 import 'dart:io';
 
+import 'SearchHandler.dart';
+
+import 'package:kuku_app_flutter/const/Consts.dart';
+
 main() async {
 
-  handleSearchRcmdService(HttpRequest request) {
-    print('handleSearchRcmdService');
-    request.response.write(
-        """{
-    "list":[
-        {
-        "show": "大神捕鱼-新手礼包",
-        "keywords": "大神捕鱼",
-        "type": 2,
-        "icon": "http://game.kuku168.cn/public/img/91qixi-logo@2x.png"
-        },
-        {
-        "show": "魔界战记",
-        "keywords": "魔界战记",
-        "type": 1,
-        "icon": "https://imgweb.kuku168.cn/35803606e5964c91b9e6e675ace19bbe"
-        },
-        {
-        "show": "真封神外传-线下返利活动",
-        "keywords": "真封神外传",
-        "type": 3,
-        "icon": "https://imgweb.kuku168.cn/3103af6eaa6e4ff996a7b90ee9844be4"
-        },
-         {
-        "show": "双倍传奇",
-        "keywords": "双倍传奇",
-        "type": 1,
-        "icon": "https://imgweb.kuku168.cn/696e1f2817804654a8b3a5721e83fa85"
-        }
-        
-        ]
-    }""");
-    request.response.close();
-  }
+  SearchKeywordsHandler searchKeywordsHandler =  SearchKeywordsHandler();
 
 
   HttpServer.bind('0.0.0.0', 8080).then((HttpServer server){
     server.listen((request){
-      print('request uri path ${request.uri.path}');
-      String path = request.uri.path;
-      if(path.indexOf("/search/recmd") != -1){
-        handleSearchRcmdService(request);
-      }else if(path.indexOf('/search/hot') != -1){
-        handleSearchRcmdService(request);
+      print('request uri path ${request.requestedUri}');
+      String url = request.requestedUri.toString();
+
+      if(url.indexOf(API.search_rcmd_keywords_api) != -1){
+        searchKeywordsHandler.handleSearchRecommendService(request);
+      }else if(url.indexOf(API.seach_hot_keywords_api) != -1){
+        searchKeywordsHandler.handleSearchRecommendService(request);
+      }else if(url.indexOf(API.seach_auto_keywords_api) != -1){
+        searchKeywordsHandler.handleSearchAutoService(request);
       }else{
         request.response.write('Not Found');
         request.response.close();

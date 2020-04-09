@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kuku_app_flutter/dto/SearchKeywordsItem.dart';
+import 'package:kuku_app_flutter/dto/SearchKeywordsDto.dart';
 import 'package:kuku_app_flutter/service/SearchService.dart';
 
 import 'SearchItem.dart';
@@ -14,7 +14,7 @@ class SearchHotItemView extends StatefulWidget {
 class _SearchHotItemViewState extends State<SearchHotItemView> {
   static const SearchService searchService = SearchService();
 
-  List<SearchKeywordsItem> hisSearchKeywords;
+  List<SearchKeywordsDto> hisSearchKeywords;
 
   @override
   void initState(){
@@ -26,7 +26,7 @@ class _SearchHotItemViewState extends State<SearchHotItemView> {
     return
       FutureBuilder(
           future: _getHotSearchItem(),
-          builder: (BuildContext context, AsyncSnapshot<List<SearchKeywordsItem>> snapshot){
+          builder: (BuildContext context, AsyncSnapshot<List<SearchKeywordsDto>> snapshot){
             if(snapshot.connectionState == ConnectionState.done){
               if(snapshot.hasError){
                 return Text('Error: ${snapshot.error}');
@@ -53,7 +53,7 @@ class _SearchHotItemViewState extends State<SearchHotItemView> {
     super.dispose();
   }
 
-  Future<List<SearchKeywordsItem>> _getHotSearchItem() async{
+  Future<List<SearchKeywordsDto>> _getHotSearchItem() async{
     return searchService.getSearchHotItems();
   }
 }

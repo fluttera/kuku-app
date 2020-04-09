@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:kuku_app_flutter/common/EventBus.dart';
-import 'package:kuku_app_flutter/dto/SearchKeywordsItem.dart';
+import 'package:kuku_app_flutter/dto/SearchKeywordsDto.dart';
 import 'package:kuku_app_flutter/service/SearchService.dart';
 
 import 'SearchItem.dart';
@@ -16,7 +16,7 @@ class _SearchHisItemViewState extends State<SearchHisItemView> {
   static const SearchService searchService = SearchService();
   StreamSubscription _searchDelSubscription;
 
-  List<SearchKeywordsItem> hisSearchKeywords;
+  List<SearchKeywordsDto> hisSearchKeywords;
 
   @override
   void initState(){
