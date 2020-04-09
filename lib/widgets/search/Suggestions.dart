@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kuku_app_flutter/styles/SearchStyles.dart';
-import 'package:kuku_app_flutter/widgets/search/SearchItemView.dart';
+import 'package:kuku_app_flutter/widgets/search/SearchHotItemView.dart';
+
+import 'SearchHisItemView.dart';
 
 /// 搜索词建议widget
 class Suggestions extends StatelessWidget{
@@ -25,7 +27,8 @@ class Suggestions extends StatelessWidget{
               padding: EdgeInsets.all(6.0) ,
               alignment: Alignment.center,
               // color: Colors.cyan,
-              child: SearchItemView(isHisSearch: false,),), // isHisSearch 是否历史搜索词View
+              child: SearchHotItemView()
+            ),
           //),
           Container(
             child: Text(
@@ -38,7 +41,7 @@ class Suggestions extends StatelessWidget{
                 padding: EdgeInsets.all(6.0) ,
                 alignment: Alignment.center,
                 // color: Colors.red,
-                child: SearchItemView(isHisSearch: true,)
+                child: SearchHisItemView()
             )
          // )
         ],

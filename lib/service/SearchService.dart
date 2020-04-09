@@ -41,52 +41,58 @@ class SearchService {
 
   /// 用户搜索历史词
   Future<List<SearchKeywordsItem>> getHisSearchItems() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<SearchKeywordsItem> list = List();
+    Set<SearchKeywordsItem> set = Set();
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String hisJson = prefs.getString(SearchHisKey);
 
-    if(hisJson==null || hisJson.isEmpty) return list;
+    if(hisJson==null || hisJson.isEmpty) return set.toList();
 
     Map<String, dynamic> mapJson = json.decode(hisJson);
-
     if(mapJson.containsKey("list")){
-      List<dynamic> listmap =  mapJson["list"];
-      listmap.forEach((json){
+      List<dynamic> listMap =  mapJson["list"];
+      listMap.forEach((json){
         SearchKeywordsItem item = SearchKeywordsItem.ofNull().fromJson(json);
-        list.add(item);
+        set.add(item);
       });
     }
-    return list;
+    return set.toList();
   }
   /// 添加历史搜索词
   void setHisSearchItems(String searchKeyword) async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String hisJson = prefs.getString(SearchHisKey);
-    Set<SearchKeywordsItem> items = Set();
+    List<SearchKeywordsItem> items = await getHisSearchItems();
+    // 加入
     SearchKeywordsItem item = SearchKeywordsItem(1, searchKeyword, searchKeyword, null);
-    Map<String, dynamic> data = Map<String, dynamic>();
-    if(hisJson != null && hisJson.isNotEmpty){
-      data = json.decode(hisJson);
-    }
     items.add(item);
-    /// 已经存在
-    if(data.containsKey("list")){
-      List<dynamic> mapList = data['list'];
-      mapList.forEach( (json) {
-        SearchKeywordsItem item = SearchKeywordsItem.ofNull().fromJson(json);
-        items.add(item);
-      });
+    _store(items);
+  }
+
+  /// 删除1个历史关键词
+  Future<void> delHisKeywordsItem(String searchKeyword) async{
+    List<SearchKeywordsItem> items = await getHisSearchItems();
+    if(items == null || items.isEmpty) return;
+    SearchKeywordsItem item = SearchKeywordsItem(1, searchKeyword, searchKeyword, null);
+    items.remove(item);
+    await _store(items);
+  }
+
+  Future<void> _store(List<SearchKeywordsItem> items) async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if(items == null || items.isEmpty) {
+     prefs.remove(SearchHisKey);
+     return;
     }
 
     //组装JSON Map
-    Map<String, dynamic> result = Map<String, dynamic>();
+    Map<String, dynamic> data = Map<String, dynamic>();
     List<Map<String, dynamic>> mapList = List<Map<String, dynamic>>();
     items.forEach((item){
       mapList.add(item.toJson());
     });
-    result['list'] = mapList;
-    prefs.setString(SearchHisKey, json.encode(result));
+    data['list'] = mapList;
+    prefs.setString(SearchHisKey, json.encode(data));
   }
 
 }

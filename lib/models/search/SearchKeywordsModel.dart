@@ -40,15 +40,6 @@ class SearchKeywordsModel with ChangeNotifier {
       updateSelected();
       notifyListeners();
     });
-  /*
-    Future.delayed(Duration(seconds: 1)).then((e){
-      _SearchKeywordsRcmdItem item1 = _SearchKeywordsRcmdItem(2, '大神捕鱼-新手礼包', '大神捕鱼', 'http://game.kuku168.cn/public/img/91qixi-logo@2x.png');
-      _SearchKeywordsRcmdItem item2 = _SearchKeywordsRcmdItem(1, '魔界战记', '魔界战记', 'https://imgweb.kuku168.cn/35803606e5964c91b9e6e675ace19bbe');
-      _SearchKeywordsRcmdItem item3 = _SearchKeywordsRcmdItem(3, '真封神外传-线下返利活动', '真封神外传', 'https://imgweb.kuku168.cn/3103af6eaa6e4ff996a7b90ee9844be4');
-      list = [item1, item2, item3];
-      selected = 0;
-      notifyListeners();
-    });*/
   }
 
   /// 间隔轮换显示搜索词
