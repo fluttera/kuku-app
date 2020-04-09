@@ -33,7 +33,7 @@ class SearchKeywordsModel with ChangeNotifier {
       notifyListeners();
       return ;
     }
-    searchService.getSearchRcmdItems().then((items){
+    searchService.getSearchRecommendItems().then((items){
       this.list = items;
       selected = 0;
       this.count = this.list.length;

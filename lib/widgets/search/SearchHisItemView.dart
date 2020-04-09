@@ -31,7 +31,6 @@ class _SearchHisItemViewState extends State<SearchHisItemView> {
   /// 之所以定义为async，因为后续需要改造为从SharedPreferences本地获删除
   Future<void> _delHisKeywords(String keywords) async {
     searchService.delHisKeywordsItem(keywords).then((v){
-      print('---delete ${keywords} success.');
       _getHisSearchItem();
     });
   }

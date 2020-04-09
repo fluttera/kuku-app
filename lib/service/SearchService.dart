@@ -12,31 +12,17 @@ class SearchService {
   const SearchService();
 
   /// 获取搜索推荐词
-  Future<List<SearchKeywordsItem>> getSearchRcmdItems() async{
-    List<SearchKeywordsItem> list = List();
+  Future<List<SearchKeywordsItem>> getSearchRecommendItems() async{
     HttpService httpService = HttpService();
     Map<String, dynamic> result = await httpService.callSearchRcmdKeywordsAPI();
-    if(result == null || result.isEmpty || !result.containsKey("list")) return list;
-    List<dynamic> mapList = result['list'];
-    mapList.forEach( (json) {
-      SearchKeywordsItem item = SearchKeywordsItem.ofNull().fromJson(json);
-      list.add(item);
-    });
-    return list;
+    return _fromJson(result);
   }
 
   /// 获取搜索热门词
   Future<List<SearchKeywordsItem>> getSearchHotItems() async{
-    List<SearchKeywordsItem> list = List();
     HttpService httpService = HttpService();
     Map<String, dynamic> result = await httpService.callSearchHotKeywordsAPI();
-    if(result == null || result.isEmpty || !result.containsKey("list")) return list;
-    List<dynamic> mapList = result['list'];
-    mapList.forEach( (json) {
-      SearchKeywordsItem item = SearchKeywordsItem.ofNull().fromJson(json);
-      list.add(item);
-    });
-    return list;
+    return _fromJson(result);
   }
 
   /// 用户搜索历史词
@@ -49,13 +35,7 @@ class SearchService {
     if(hisJson==null || hisJson.isEmpty) return set.toList();
 
     Map<String, dynamic> mapJson = json.decode(hisJson);
-    if(mapJson.containsKey("list")){
-      List<dynamic> listMap =  mapJson["list"];
-      listMap.forEach((json){
-        SearchKeywordsItem item = SearchKeywordsItem.ofNull().fromJson(json);
-        set.add(item);
-      });
-    }
+    set.addAll(_fromJson(mapJson));
     return set.toList();
   }
   /// 添加历史搜索词
@@ -77,14 +57,29 @@ class SearchService {
   }
 
   Future<void> _store(List<SearchKeywordsItem> items) async{
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     if(items == null || items.isEmpty) {
      prefs.remove(SearchHisKey);
      return;
     }
+    //组装JSON Map
+    prefs.setString(SearchHisKey, _toJson(items));
+  }
 
+  /// 针对SearchKeywordsItem List 处理Json转换
+  List<SearchKeywordsItem> _fromJson(Map<String, dynamic> json){
+    List<SearchKeywordsItem> list = List();
+    if(json == null || json.isEmpty || !json.containsKey("list")) return list;
+    List<dynamic> mapList = json['list'];
+    mapList.forEach( (json) {
+      SearchKeywordsItem item = SearchKeywordsItem.ofNull().fromJson(json);
+      list.add(item);
+    });
+    return list;
+  }
+  /// 针对SearchKeywordsItem List 处理Json转换
+  String _toJson(List<SearchKeywordsItem> items){
+    if(items == null || items.isEmpty) return null;
     //组装JSON Map
     Map<String, dynamic> data = Map<String, dynamic>();
     List<Map<String, dynamic>> mapList = List<Map<String, dynamic>>();
@@ -92,7 +87,6 @@ class SearchService {
       mapList.add(item.toJson());
     });
     data['list'] = mapList;
-    prefs.setString(SearchHisKey, json.encode(data));
+    return json.encode(data);
   }
-
 }
