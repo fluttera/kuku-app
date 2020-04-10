@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
             brightness: Brightness.light,
             primarySwatch: Colors.orange,
-            scaffoldBackgroundColor: Colors.white
+            scaffoldBackgroundColor: Colors.white // 内容区域背景
         ),
         home: MyHomePage(title: 'KUKU娱乐'),
       )

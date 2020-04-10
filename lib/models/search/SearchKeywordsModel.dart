@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:kuku_app_flutter/service/SearchService.dart';
 
-import 'package:kuku_app_flutter/dto/SearchKeywordsDto.dart';
+import 'package:kuku_app_flutter/dto/GameInfoDto.dart';
 
+/// 跨路由状态共享Model
 class SearchKeywordsModel with ChangeNotifier {
 
   static const SearchService searchService = SearchService();
 
-  List<SearchKeywordsDto> list = List();
+  List<GameInfoDto> list = List();
 
   int selected;
 

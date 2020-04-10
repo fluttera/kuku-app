@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:kuku_app_flutter/const/Consts.dart';
 import 'package:kuku_app_flutter/dto/SearchAutoKeywordsDto.dart';
-import 'package:kuku_app_flutter/dto/SearchKeywordsDto.dart';
+import 'package:kuku_app_flutter/dto/GameInfoDto.dart';
 import 'package:kuku_app_flutter/service/HttpService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,22 +13,22 @@ class SearchService {
   const SearchService();
 
   /// 获取搜索推荐词
-  Future<List<SearchKeywordsDto>> getSearchRecommendItems() async{
+  Future<List<GameInfoDto>> getSearchRecommendItems() async{
     HttpService httpService = HttpService();
     Map<String, dynamic> result = await httpService.callSearchRcmdKeywordsAPI();
     return _fromJson(result);
   }
 
   /// 获取搜索热门词
-  Future<List<SearchKeywordsDto>> getSearchHotItems() async{
+  Future<List<GameInfoDto>> getSearchHotItems() async{
     HttpService httpService = HttpService();
     Map<String, dynamic> result = await httpService.callSearchHotKeywordsAPI();
     return _fromJson(result);
   }
 
   /// 用户搜索历史词
-  Future<List<SearchKeywordsDto>> getHisSearchItems() async{
-    Set<SearchKeywordsDto> set = Set();
+  Future<List<GameInfoDto>> getHisSearchItems() async{
+    Set<GameInfoDto> set = Set();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String hisJson = prefs.getString(SearchHisKey);
 
@@ -48,26 +48,26 @@ class SearchService {
 
   /// 添加历史搜索词
   void setHisSearchItems(String searchKeyword) async{
-    List<SearchKeywordsDto> items = await getHisSearchItems();
+    List<GameInfoDto> items = await getHisSearchItems();
     // 加入
-    SearchKeywordsDto item = SearchKeywordsDto(1, searchKeyword, searchKeyword, null);
+    GameInfoDto item = GameInfoDto(1, searchKeyword, searchKeyword, null);
     items.add(item);
     _store(items);
   }
 
   /// 删除1个历史关键词
   Future<void> delHisKeywordsItem(String searchKeyword) async{
-    List<SearchKeywordsDto> items = await getHisSearchItems();
+    List<GameInfoDto> items = await getHisSearchItems();
 
     if(items == null || items.isEmpty) return;
 
-    SearchKeywordsDto item = SearchKeywordsDto(1, searchKeyword, searchKeyword, null);
+    GameInfoDto item = GameInfoDto(1, searchKeyword, searchKeyword, null);
     items.remove(item);
     await _store(items);
   }
 
   /// 本地存储历史搜索记录
-  Future<void> _store(List<SearchKeywordsDto> items) async{
+  Future<void> _store(List<GameInfoDto> items) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if(items == null || items.isEmpty) {
@@ -80,21 +80,21 @@ class SearchService {
   }
 
   /// 针对SearchKeywordsItem List 处理Json转换
-  List<SearchKeywordsDto> _fromJson(Map<String, dynamic> json){
-    List<SearchKeywordsDto> list = List();
+  List<GameInfoDto> _fromJson(Map<String, dynamic> json){
+    List<GameInfoDto> list = List();
 
     if(json == null || json.isEmpty || !json.containsKey("list")) return list;
 
     List<dynamic> mapList = json['list'];
 
     mapList.forEach( (json) {
-      SearchKeywordsDto item = SearchKeywordsDto.ofNull().fromJson(json);
+      GameInfoDto item = GameInfoDto.ofNull().fromJson(json);
       list.add(item);
     });
     return list;
   }
   /// 针对SearchKeywordsItem List 处理Json转换
-  String _toJson(List<SearchKeywordsDto> items){
+  String _toJson(List<GameInfoDto> items){
 
     if(items == null || items.isEmpty) return null;
 

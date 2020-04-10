@@ -1,6 +1,6 @@
 import 'AbstractBaseDto.dart';
 
-class SearchKeywordsDto extends BaseDto{
+class GameInfoDto extends BaseDto{
 
   int _type; // 搜索类型 1=游戏 2=礼包 3=资讯
   set seType(int type) => _type = type;
@@ -18,12 +18,22 @@ class SearchKeywordsDto extends BaseDto{
   set setIcon(String icon) => _icon = icon;
   String get getIcon => _icon;
 
-  SearchKeywordsDto(this._type, this._show, this._keywords, this._icon);
-  SearchKeywordsDto.ofNull();
+  String selfdom; // 一句话简介
+  set setSelfdom(String selfdom) => selfdom = selfdom;
+  String get getSelfdom => selfdom;
+
+  GameInfoDto(this._type, this._show, this._keywords, this._icon, {this.selfdom});
+  GameInfoDto.ofNull();
 
   @override
   BaseDto fromJson(Map<String, dynamic> json) {
-    return  SearchKeywordsDto(json['type'], json['show'], json['keywords'], json['icon']);
+    return  GameInfoDto(
+        json['type'],
+        json['show'],
+        json['keywords'],
+        json['icon'],
+        selfdom: json['selfdom']
+    );
   }
 
   @override
@@ -32,15 +42,16 @@ class SearchKeywordsDto extends BaseDto{
         'type': _type,
         'show': _show,
         'icon': _icon,
-        'keywords': _keywords
+        'keywords': _keywords,
+        'selfdom': selfdom
       };
 
   @override
   bool operator == (other) {
-    if(other is! SearchKeywordsDto){
+    if(other is! GameInfoDto){
       return false;
     }
-    final SearchKeywordsDto item = other;
+    final GameInfoDto item = other;
     return _show == item._show;
   }
 

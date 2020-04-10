@@ -1,12 +1,12 @@
 import 'AbstractBaseDto.dart';
-import 'SearchKeywordsDto.dart';
+import 'GameInfoDto.dart';
 
 class SearchAutoKeywordsDto extends BaseDto{
   int _total;
   int get getTotal => _total;
 
-  List<SearchKeywordsDto> _list;
-  List<SearchKeywordsDto> get getList => _list;
+  List<GameInfoDto> _list;
+  List<GameInfoDto> get getList => _list;
 
   SearchAutoKeywordsDto(total, list){
     this._total = total;
@@ -22,9 +22,9 @@ class SearchAutoKeywordsDto extends BaseDto{
     List<dynamic> jsonList = json['list'];
     if(jsonList == null || jsonList.isEmpty) return SearchAutoKeywordsDto(_total, null);
 
-    List<SearchKeywordsDto> listTmp = List();
+    List<GameInfoDto> listTmp = List();
     jsonList.forEach((one){
-      SearchKeywordsDto it = SearchKeywordsDto.ofNull().fromJson(one);
+      GameInfoDto it = GameInfoDto.ofNull().fromJson(one);
       listTmp.add(it);
     });
 

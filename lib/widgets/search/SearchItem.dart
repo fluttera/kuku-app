@@ -34,12 +34,14 @@ class _SearchItemState extends State<SearchItem> {
           },
           label: Text(widget.title),
           shape: shape,
+          backgroundColor: Colors.black12,
         )
         )
                 :
         /// 大家都在搜索VIEW， 不允许对搜索词删除操作
         Chip(
           label: Text(widget.title),
+          backgroundColor: Colors.black12,
           shape: shape,
         ),
       ),

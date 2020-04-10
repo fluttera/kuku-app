@@ -45,21 +45,11 @@ class _SearchBarState extends State<SearchBar>{
                       children: <Widget>[
                         ClipRRect(
                           borderRadius: BorderRadius.circular(6.0),
-                          child: iconUrl != null && iconUrl.isNotEmpty ? Image(
-                            image: NetworkImage('$iconUrl'),
-                            width: 20,
-                            /*loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                              if (loadingProgress == null)
-                                return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.0,
-                                  value: loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                      : null,
-                                ),
-                              );
-                            },*/
+                          child: iconUrl != null && iconUrl.isNotEmpty ? FadeInImage.assetNetwork(
+                            image: '$iconUrl',
+                            placeholder: 'images/icon_place_holder.png',
+                            height: 20,
+                            fit: BoxFit.fitHeight,
                           ) : Container(height: 0, width: 0,),
                         ),
                         Padding(padding: EdgeInsets.only(left: 10), child: Text('$show', style: searchStyle )),
