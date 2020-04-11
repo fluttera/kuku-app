@@ -15,6 +15,8 @@ main() async {
       print('request uri path ${request.requestedUri}');
       String url = request.requestedUri.toString();
 
+      sleep(Duration(seconds: 1));
+
       if(url.indexOf(API.search_rcmd_keywords_api) != -1){
         searchKeywordsHandler.handleSearchRecommendService(request);
       }else if(url.indexOf(API.seach_hot_keywords_api) != -1){

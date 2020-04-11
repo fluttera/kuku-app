@@ -24,8 +24,10 @@ class _SearchHotItemViewState extends State<SearchHotItemView> {
   @override
   Widget build(BuildContext context) {
     return
+      //
       FutureBuilder(
           future: _getHotSearchItem(),
+          //
           builder: (BuildContext context, AsyncSnapshot<List<GameInfoDto>> snapshot){
             if(snapshot.connectionState == ConnectionState.done){
               if(snapshot.hasError){
