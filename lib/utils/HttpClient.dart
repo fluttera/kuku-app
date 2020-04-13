@@ -8,7 +8,10 @@ import 'package:kuku_app_flutter/const/Consts.dart';
 class HttpClient {
   Dio dio = Dio();
 
-  HttpClient._internal(){
+  HttpClient._internal({
+    bool refresh,
+    bool noCache
+  }){
     dio.options
         ..connectTimeout = 5000
         ..receiveTimeout = 10000
@@ -16,19 +19,33 @@ class HttpClient {
           return status > 0;
         }
         ..headers = {
-        HttpHeaders.userAgentHeader: 'Dio'
+          HttpHeaders.userAgentHeader: 'Dio',
+          HttpHeaders.authorizationHeader: ''//authorization
+        }
+        ..extra = {
+          'refresh': refresh ?? false,
+          'noCache': noCache ?? true
         }
     ;
+
   }
 
-  factory HttpClient() => _getInstance();
+  /// refresh = true 表示下拉刷新，不从缓存获取数，但数据会缓存到本地
+  /// noCache = true 表示不使用缓存，不从缓存获取数据，也不会缓存到本地
+  factory HttpClient({
+    bool refresh,
+    bool noCache
+  }) => _getInstance(refresh: refresh, noCache: noCache);
 
   static get getInstance => _instance;
   static HttpClient _instance;
 
-  static HttpClient _getInstance(){
+  static HttpClient _getInstance({
+    bool refresh,
+    bool noCache
+  }){
     if(_instance == null ){
-      _instance = HttpClient._internal();
+      _instance = HttpClient._internal(refresh: refresh, noCache: noCache);
     }
     return _instance;
   }
@@ -169,4 +186,22 @@ class HttpClient {
       }
     });
   }
+}
+
+class CacheObject{
+  Response response;
+  int timeStamp;
+  CacheObject(this.response):timeStamp = DateTime.now().millisecondsSinceEpoch;
+
+  @override
+  bool operator ==(other) {
+    return response.hashCode == other.hashCode;
+  }
+
+  @override
+  int get hashCode => response.realUri.hashCode;
+}
+
+class NetCache  extends Interceptor {
+
 }

@@ -17,12 +17,12 @@ class SearchKeywordsModel with ChangeNotifier {
   int count;
 
   SearchKeywordsModel ({count: 3}) {
-    this._reflush(count);
+    this._refresh(count);
   }
   get getList => list;
 
   /// 获取count数量的推荐搜索词
-  void _reflush (int count) {
+  void _refresh (int count) {
     _receiveList(count);
   }
 

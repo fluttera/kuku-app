@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
-const searchStyle = TextStyle(
-  fontSize: 12,
-  color: Colors.black45,
+/// 主题色
+const Color primaryColor = Color.fromARGB(255,249, 166, 22);
+
+/// 搜索栏默认推荐文本样式
+const searchTextStyle = TextStyle(
+  fontSize: 16,
+  color: Colors.black54,
   // backgroundColor: Colors.black26,
 );
 /// 搜索推荐样式

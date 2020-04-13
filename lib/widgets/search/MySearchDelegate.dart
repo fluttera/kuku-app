@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:kuku_app_flutter/service/SearchService.dart';
+import 'package:kuku_app_flutter/styles/SearchStyles.dart';
 
 import 'package:kuku_app_flutter/widgets/search/AutoComplete.dart';
 import 'package:kuku_app_flutter/widgets/search/Suggestions.dart';
@@ -15,7 +16,6 @@ class MySearchDelegate extends SearchDelegate<String>{
   StreamSubscription _searchSubscription;
 
   MySearchDelegate(searchFieldLabel):super(searchFieldLabel: searchFieldLabel) ;
-
    /* @override
     String get searchFieldLabel => '搜索全网精品游戏';*/
 
@@ -24,9 +24,20 @@ class MySearchDelegate extends SearchDelegate<String>{
     // TODO: implement buildActions
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: Icon(
+          Icons.clear,
+          color: Colors.black45,
+        ),
         onPressed: () => query = '',
       ),
+
+      IconButton(
+        icon: Icon(Icons.search),
+        onPressed: (){
+          this.showResults(context);
+        },
+      ),
+
     ];
   }
 
@@ -77,11 +88,24 @@ class MySearchDelegate extends SearchDelegate<String>{
 
     // 发送Auto事件
     if(query.isNotEmpty){
-      print('==2=>$query');
       eventBus.fire(SearchQueryChangedEvent(query));
     }
     /// 将方法作为参数传递给子组件调用
     return query.isEmpty ? Suggestions() : AutoComplete(query, this.popResults, this.setSearchKeyword);
+  }
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return theme.copyWith(
+      primaryColor: Colors.white,
+      primaryIconTheme: theme.primaryIconTheme.copyWith(color: primaryColor),
+      primaryColorBrightness: Brightness.light,
+      primaryTextTheme: theme.textTheme,
+      textTheme: TextTheme(title: searchTextStyle)
+    );
   }
 
   /// 搜索结果展示

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kuku_app_flutter/styles/SearchStyles.dart';
 import 'package:kuku_app_flutter/widgets/search/SearchBar.dart';
 import 'package:kuku_app_flutter/common/Store.dart';
 
@@ -10,6 +11,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    /*return
+     Center(child:
+       Container(
+         constraints: new BoxConstraints.expand(
+           height:Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
+         ),
+         decoration: new BoxDecoration(
+           border: new Border.all(width: 2.0, color: Colors.red),
+           color: Colors.grey,
+           borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+           image: new DecorationImage(
+             image: new NetworkImage('https://imgweb.kuku168.cn/f06f691749f240ce9784d4f90dd2639a'),
+             centerSlice: new Rect.fromLTRB(270.0, 180.0, 1360.0, 730.0),
+           ),
+         ),
+         padding: const EdgeInsets.all(20.0),
+         alignment: Alignment.topRight,
+         child: new Text('Hello World',textDirection: TextDirection.ltr,
+             style: Theme.of(context).textTheme.display1.copyWith(color: Colors.blue)),
+         transform: new Matrix4.rotationZ(0.1),
+       )
+     );*/
     return Store.init( // 增加状态共享
       context: context,
       child: MaterialApp(
@@ -85,53 +108,19 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     // than having to individually change instances of widgets.
 
     Store.widgetCtx = context;
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         // title: Text(widget.title),
-        backgroundColor: Colors.white,
+        backgroundColor: primaryColor,
         centerTitle: true,
         leading: Image(
           image: AssetImage("images/kuku_logo.png"),
         ),
         title: SearchBar(),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  hintText: '游戏名'
-              ),
-            ),
-          ],
-        ),
-      ),
+      body:  Text('123'),
       floatingActionButton: FloatingActionButton(
        // onPressed: _incrementCounter,
         onPressed: () {

@@ -25,18 +25,12 @@ class _SearchBarState extends State<SearchBar>{
         child: Container(
           // color: Colors.grey,
             alignment: Alignment.center,
-            constraints: BoxConstraints.tightFor(width: 230, height: 30),
+            constraints: BoxConstraints.tightFor(width: 280, height: 36),
             decoration: BoxDecoration(
-              borderRadius: BorderRadiusDirectional.all(
-                Radius.circular(30),
-              ),
-              gradient: RadialGradient(
-                  colors: [Colors.black12, Colors.black12],
-                  center: Alignment.topLeft,
-                  radius: .98
-              ),
+              color:  Colors.white,
+              borderRadius: BorderRadius.circular(36),
             ),
-            child: Padding(padding: EdgeInsets.only(left: 15, right: 15),
+            child: Padding(padding: EdgeInsets.only(left: 12, right: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -48,16 +42,17 @@ class _SearchBarState extends State<SearchBar>{
                           child: iconUrl != null && iconUrl.isNotEmpty ? FadeInImage.assetNetwork(
                             image: '$iconUrl',
                             placeholder: 'images/icon_place_holder.png',
-                            height: 20,
+                            height: 28,
                             fit: BoxFit.fitHeight,
                           ) : Container(height: 0, width: 0,),
                         ),
-                        Padding(padding: EdgeInsets.only(left: 10), child: Text('$show', style: searchStyle )),
+                        Padding(padding: EdgeInsets.only(left: 10),
+                            child: Text('$show', style: searchTextStyle )),
                       ]
                   ),
                   Icon(
                     Icons.search,
-                    color: Colors.white30,
+                    color: Colors.black12,
                   ),
                 ],
               ),)

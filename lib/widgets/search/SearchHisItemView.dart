@@ -55,6 +55,7 @@ class _SearchHisItemViewState extends State<SearchHisItemView> {
     _searchDelSubscription.cancel();
   }
 
+
   void _getHisSearchItem() {
     searchService.getHisSearchItems().then((value){
       this.hisSearchKeywords = value;

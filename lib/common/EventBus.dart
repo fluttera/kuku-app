@@ -17,3 +17,9 @@ class SearchQueryChangedEvent{
   String keywords;
   SearchQueryChangedEvent(this.keywords);
 }
+
+/// Event 登录成功
+class LoginSuccessEvent{
+
+}
+/// Event 注销成功
